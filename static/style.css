@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.refresh-button {
+    display: inline-block;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.refresh-button:hover {
+    background-color: #0056b3;
+}
+
+.audience-item {
+    margin-bottom: 10px; /* Space between ad sets */
+}
+
+.audience-item:last-child {
+    margin-bottom: 0; /* Remove extra space after the last ad set */
+}
+
+td p {
+    margin: 5px 0; /* Space between caption/headline paragraphs */
+}

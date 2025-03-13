@@ -2,72 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Meta Campaigns</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Campaigns Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Meta Campaigns Overview (Active Campaigns Only)</h1>
+    <div class="dashboard-container">
+        <h1>Meta Campaigns Dashboard</h1>
+        
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
 
-    {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
+        <a href="{{ url_for('refresh_campaigns') }}" class="refresh-button">Refresh Campaigns</a>
 
-    <a href="{{ url_for('refresh_campaigns') }}" class="refresh-button">Refresh Campaigns</a>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Objective</th>
-                <th>Status</th>
-                <th>Daily Budget</th>
-                <th>Lifetime Budget</th>
-                <th>Spend Cap</th>
-                <th>Audience</th>
-                <th>Captions</th>
-                <th>Headlines</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if meta_campaigns %}
-                {% for campaign in meta_campaigns %}
-                <tr>
-                    <td>{{ campaign.name }}</td>
-                    <td>{{ campaign.objective }}</td>
-                    <td>{{ campaign.status }}</td>
-                    <td>{{ campaign.daily_budget }}</td>
-                    <td>{{ campaign.lifetime_budget }}</td>
-                    <td>{{ campaign.spend_cap }}</td>
-                    <td>
-                        {% for audience in campaign.audience %}
-                            <div class="audience-item">
-                                <strong>{{ audience.name }}</strong><br>
-                                Age: {{ audience.age_min }} - {{ audience.age_max }}<br>
-                                Locations: {{ audience.geo_locations }}<br>
-                                Interests: {{ audience.interests }}
-                            </div>
+        {% if meta_campaigns %}
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Campaign</th>
+                            <th>Objective</th>
+                            <th>Daily Budget</th>
+                            <th>Ad Set</th>
+                            <th>Age Range</th>
+                            <th>Locations</th>
+                            <th>Ad Name</th>
+                            <th>Captions</th>
+                            <th>Headlines</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for campaign in meta_campaigns %}
+                            {% for adset in campaign.audience %}
+                                {% for ad in adset.ads %}
+                                    <tr>
+                                        <td class="campaign-cell">{{ campaign.name }}</td>
+                                        <td>{{ campaign.objective }}</td>
+                                        <td>{{ campaign.daily_budget }}</td>
+                                        <td class="adset-cell">{{ adset.name }}</td>
+                                        <td>{{ adset.age_min }} - {{ adset.age_max }}</td>
+                                        <td>
+                                            <ul>
+                                                {% for location in adset.locations %}
+                                                    <li>{{ location }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                        <td class="ad-cell">{{ ad.name }}</td>
+                                        <td>
+                                            {% for caption in ad.captions %}
+                                                <p>{{ caption }}</p>
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% for headline in ad.headlines %}
+                                                <p>{{ headline }}</p>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
                         {% endfor %}
-                    </td>
-                    <td>
-                        {% for caption in campaign.captions %}
-                            <p>{{ caption }}</p>
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for headline in campaign.headlines %}
-                            <p>{{ headline }}</p>
-                        {% endfor %}
-                    </td>
-                </tr>
-                {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan="9">No active campaigns found or an error occurred. Click 'Refresh Campaigns' to fetch data.</td>
-                </tr>
-            {% endif %}
-        </tbody>
-    </table>
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="no-data">No active campaigns found or an error occurred. Click 'Refresh Campaigns' to fetch data.</p>
+        {% endif %}
+    </div>
 
-    <a href="/">Back to Home</a>
+    <a href="/" class="back-link">Back to Home</a>
 </body>
 </html>

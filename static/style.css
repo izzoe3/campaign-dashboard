@@ -1,64 +1,160 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
     padding: 20px;
 }
 
-h1, h2 {
-    color: #333;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
+/* Typography */
+h1 {
+    font-size: 2rem;
+    color: #1a73e8;
     margin-bottom: 20px;
+    font-weight: 600;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    vertical-align: top;
-    max-width: 300px;
-    word-wrap: break-word;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-a {
-    color: #007BFF;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
+/* Refresh Button */
 .refresh-button {
     display: inline-block;
-    background-color: #007BFF;
+    background-color: #1a73e8;
     color: white;
     padding: 10px 20px;
-    border: none;
     border-radius: 5px;
     text-decoration: none;
-    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
     margin-bottom: 20px;
 }
 
 .refresh-button:hover {
-    background-color: #0056b3;
+    background-color: #1557b0;
 }
 
-.audience-item {
-    margin-bottom: 10px; /* Space between ad sets */
+/* Error and No Data Messages */
+.error-message {
+    color: #d32f2f;
+    margin-bottom: 20px;
 }
 
-.audience-item:last-child {
-    margin-bottom: 0; /* Remove extra space after the last ad set */
+.no-data {
+    color: #666;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+/* Table Wrapper for Scroll */
+.table-wrapper {
+    overflow-x: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #1a73e8;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+td {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    vertical-align: top;
+}
+
+/* Cell Styling */
+.campaign-cell {
+    font-weight: 600;
+    color: #1a73e8;
+    max-width: 200px;
+}
+
+.adset-cell {
+    font-weight: 500;
+    color: #555;
+    max-width: 200px;
+}
+
+.ad-cell {
+    color: #777;
+    max-width: 200px;
+}
+
+td ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+td ul li {
+    margin-bottom: 5px;
 }
 
 td p {
-    margin: 5px 0; /* Space between caption/headline paragraphs */
+    margin-bottom: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    th, td {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .campaign-cell, .adset-cell, .ad-cell {
+        max-width: 150px;
+        word-wrap: break-word;
+    }
+}
+
+/* Back Link */
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #1a73e8;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #1557b0;
+    text-decoration: underline;
 }

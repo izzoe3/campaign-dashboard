@@ -2,12 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Meta Ad Campaign Dashboard</title>
+    <title>Meta Campaigns</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Meta Ad Campaign Dashboard</h1>
-    <p>Welcome to the dashboard! Click below to view your Meta ad campaigns.</p>
-    <a href="/campaigns">View Campaigns</a>
+    <h1>Meta Campaigns Overview (Active Campaigns Only)</h1>
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    <a href="{{ url_for('refresh_campaigns') }}" class="refresh-button">Refresh Campaigns</a>
+
+    <div class="campaign-container">
+        {% if meta_campaigns %}
+            {% for campaign in meta_campaigns %}
+                <details class="campaign-card">
+                    <summary>
+                        <h2>{{ campaign.name }} ({{ campaign.objective }}) - {{ campaign.daily_budget }}</h2>
+                    </summary>
+                    <div class="adset-container">
+                        {% for adset in campaign.audience %}
+                            <details class="adset-card">
+                                <summary>
+                                    <h3>{{ adset.name }}</h3>
+                                </summary>
+                                <p><strong>Age Range:</strong> {{ adset.age_min }} - {{ adset.age_max }}</p>
+                                <p><strong>Locations:</strong></p>
+                                <ul>
+                                    {% for location in adset.locations %}
+                                        <li>{{ location }}</li>
+                                    {% endfor %}
+                                </ul>
+                                <p><strong>Interests:</strong></p>
+                                <ul>
+                                    {% for interest in adset.interests %}
+                                        <li>{{ interest }}</li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="ad-container">
+                                    {% for ad in adset.ads %}
+                                        <details class="ad-card">
+                                            <summary>
+                                                <h4>{{ ad.name }}</h4>
+                                            </summary>
+                                            <div class="captions">
+                                                <strong>Captions:</strong>
+                                                {% for caption in ad.captions %}
+                                                    <p>{{ caption }}</p>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="headlines">
+                                                <strong>Headlines:</strong>
+                                                {% for headline in ad.headlines %}
+                                                    <p>{{ headline }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        </details>
+                                    {% endfor %}
+                                </div>
+                            </details>
+                        {% endfor %}
+                    </div>
+                </details>
+            {% endfor %}
+        {% else %}
+            <p>No active campaigns found or an error occurred. Click 'Refresh Campaigns' to fetch data.</p>
+        {% endif %}
+    </div>
+
+    <a href="/">Back to Home</a>
 </body>
 </html>
